@@ -1,474 +1,133 @@
-/* =========================================================
-   style.css – Skärgårdsguiden
-   All formatering för sidan finns i den här filen.
-   Ordning: färger/variabler, grund, sidhuvud, innehåll,
-   packlistan, sidfot, kvällsläge, mobil.
-   ========================================================= */
+/* style.css – The Archipelago Guide */
 
-
-/* ---------- Färger och mått ----------
-   Jag samlar färgerna i variabler här uppe. Då behöver jag
-   bara ändra på ett ställe, och kvällsläget kan byta ut dem
-   längre ner i filen. */
+/* Colours and fonts in one place, so I only change them here */
 :root {
-  --bakgrund: #eef3f2;    /* ljus, lite grå himmel */
-  --yta: #ffffff;         /* bakgrund på korten */
-  --text: #14303f;        /* mörkt havsblått istället för svart */
-  --text-ljus: #4a5f69;   /* för bildtexter och sidfot */
-  --lank: #0b5f63;        /* mörk turkos, klarar kontrastkraven */
-  --lav: #f2c94c;         /* gul som laven på klipporna */
-  --hav: #123a4f;         /* sidhuvud och sidfot */
-
-  --rubrik-font: "Zilla Slab", Georgia, serif;
-  --text-font: "Atkinson Hyperlegible", Arial, sans-serif;
-  --max-bredd: 70rem;
-}
-
-
-/* ---------- Grund ---------- */
-
-/* box-sizing gör att padding räknas in i bredden, mycket lättare att räkna med */
-* {
-  box-sizing: border-box;
+  --sea: #123a4f;
+  --yellow: #f2c94c;
+  --bg: #eef3f2;
+  --text: #14303f;
+  --heading-font: "Zilla Slab", Georgia, serif;
+  --body-font: "Atkinson Hyperlegible", Arial, sans-serif;
 }
 
 body {
   margin: 0;
-  background-color: var(--bakgrund);
+  background: var(--bg);
   color: var(--text);
-  font-family: var(--text-font);
+  font-family: var(--body-font);
   font-size: 1.125rem;
   line-height: 1.6;
 }
 
 h1, h2, h3 {
-  font-family: var(--rubrik-font);
-  line-height: 1.15;
-  margin: 1.5em 0 0.4em;
+  font-family: var(--heading-font);
+  line-height: 1.2;
 }
 
-h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); }
-h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
-h3 { font-size: 1.3rem; }
-
-/* Bilder ska aldrig bli bredare än det de ligger i */
+/* Images never get wider than their box */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-a {
-  color: var(--lank);
-  text-underline-offset: 0.2em;
-}
-
-a:hover {
-  text-decoration-thickness: 3px;
-}
-
-/* Tydlig ram när man tabbar runt med tangentbordet */
-:focus-visible {
-  outline: 3px solid var(--lav);
-  outline-offset: 3px;
-}
-
-/* "Hoppa till innehållet" ligger utanför skärmen tills den får fokus */
-.hoppa {
-  position: absolute;
-  left: -999px;
-  background: var(--lav);
-  color: var(--hav);
-  padding: 0.5rem 1rem;
-}
-
-.hoppa:focus {
-  left: 1rem;
-  top: 1rem;
-}
-
-
-/* ---------- Sidhuvud och meny ---------- */
-
-.sidhuvud {
-  background-color: var(--hav);
-  padding: 0.75rem 1.5rem;
+/* Header: logo on the left, menu on the right.
+   flex-wrap lets the menu drop down a line on small screens */
+header {
+  background: var(--sea);
+  padding: 1rem 1.5rem;
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
   flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.logga {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  color: #fff;
-  font-family: var(--rubrik-font);
-  font-size: 1.5rem;
-  font-weight: 700;
+header a {
+  color: white;
   text-decoration: none;
-  margin-right: auto; /* trycker resten av sidhuvudet åt höger */
 }
 
-.meny ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.logo {
+  font-family: var(--heading-font);
+  font-size: 1.4rem;
+}
+
+nav {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
-.meny a {
-  color: #fff;
-  text-decoration: none;
-  padding: 0.3rem 0;
+nav a:hover {
+  border-bottom: 3px solid var(--yellow);
 }
 
-/* Den sida man är på får en gul linje under sig */
-.meny a[aria-current="page"],
-.meny a:hover {
-  border-bottom: 3px solid var(--lav);
-}
-
-/* Gemensam stil för båda knapparna i sidhuvudet */
-.meny-knapp,
-.kvall-knapp {
-  font: inherit;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 2rem;
-  padding: 0.4rem 1rem;
-}
-
-.kvall-knapp {
-  background-color: var(--lav);
-  color: var(--hav);
-  border: none;
-  font-weight: 700;
-}
-
-/* Menyknappen behövs inte på stor skärm */
-.meny-knapp {
-  display: none;
-  background: none;
-  color: #fff;
-  border: 2px solid #fff;
-}
-
-
-/* ---------- Startsidans stora bild ---------- */
-
-.hero {
-  position: relative; /* så att texten kan placeras ovanpå bilden */
-}
-
-.hero img {
-  width: 100%;
-  height: 70vh;
-  min-height: 24rem;
-  object-fit: cover; /* beskär bilden istället för att trycka ihop den */
-}
-
-.hero-text {
-  position: absolute;
-  left: 1.5rem;
-  right: 1.5rem;
-  bottom: 2rem;
-  max-width: 36rem;
-  padding: 1.5rem;
-  color: #fff;
-  /* Mörk, lite genomskinlig ruta så texten går att läsa mot bilden */
-  background-color: rgba(18, 58, 79, 0.9);
-}
-
-.hero-text h1 {
-  margin: 0 0 0.5rem;
-}
-
-.hero-text p {
-  margin: 0;
-  font-size: 1.25rem;
-}
-
-
-/* ---------- Innehåll ---------- */
-
-.sektion {
-  max-width: var(--max-bredd);
+/* Keeps the text in a readable column in the middle */
+main {
+  max-width: 60rem;
   margin: 0 auto;
   padding: 1rem 1.5rem 3rem;
 }
 
-/* Smal spalt för löptext, långa rader är jobbiga att läsa */
-.smal {
-  max-width: 42rem;
+.hero {
+  width: 100%;
 }
 
-/* På en hel sektion: sektionen är lika bred som de andra
-   (så allt börjar vid samma vänsterkant), men texten inuti hålls smal */
-.sektion.smal {
-  max-width: var(--max-bredd);
+/* Photos come in different shapes, so I crop them all to the same size */
+.hero,
+.cards img {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
 }
 
-.sektion.smal > * {
-  max-width: 42rem;
+footer a {
+  color: var(--yellow);
 }
 
-/* Korten på startsidan. Grid fixar kolumnerna själv:
-   så många som får plats, minst 16rem breda */
-.kort-rutnat {
+/* As many columns as fit, each at least 15rem wide */
+.cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 1.5rem;
-  margin-top: 2rem;
 }
 
-.kort {
-  background-color: var(--yta);
-  border-top: 6px solid var(--lav);
-  padding-bottom: 1.25rem;
+.cards article {
+  background: white;
+  border-top: 6px solid var(--yellow);
+  padding-bottom: 1rem;
 }
 
-/* Allt i kortet utom bilden får luft på sidorna */
-.kort h3,
-.kort p,
-.kort a {
-  margin-left: 1.25rem;
-  margin-right: 1.25rem;
+.cards h3,
+.cards p {
+  padding: 0 1rem;
 }
 
-.kort h3 {
-  margin-top: 1rem;
-}
-
-/* Knappliknande länk */
-.knapp-lank {
-  display: inline-block;
-  background-color: var(--hav);
-  color: #fff;
-  padding: 0.6rem 1.4rem;
-  border-radius: 2rem;
-  text-decoration: none;
-  margin-top: 1rem;
-}
-
-.knapp-lank:hover {
-  background-color: var(--lank);
-}
-
-
-/* ---------- Öarna ---------- */
-
-.snabblankar {
-  display: flex;
-  gap: 1.5rem;
-  padding: 0;
-  list-style: none;
-}
-
-/* Varje ö: bild till vänster, text till höger (på stor skärm) */
-.o-sektion {
-  max-width: var(--max-bredd);
-  margin: 0 auto 4rem;
-  padding: 0 1.5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 2.5rem;
-  scroll-margin-top: 1rem; /* lite luft när man hoppar hit via länk */
-}
-
-/* Rubriken går över båda kolumnerna */
-.o-sektion h2 {
-  grid-column: 1 / -1;
-}
-
-/* Varannan ö får bilden till höger, så det inte blir så stelt */
-.o-sektion:nth-of-type(even) figure {
-  order: 2;
-}
-
-figure {
-  margin: 0;
-}
-
-figcaption {
-  font-size: 0.95rem;
-  color: var(--text-ljus);
-  margin-top: 0.4rem;
-}
-
-.o-text h3 {
-  margin-top: 1.2em;
-}
-
-
-/* ---------- Packlistan ---------- */
-
-.stapel-ram {
-  background-color: var(--yta);
-  border: 2px solid var(--hav);
-  border-radius: 2rem;
+/* Packing list */
+.bar-frame {
+  border: 2px solid var(--sea);
+  border-radius: 1rem;
   height: 1.5rem;
   overflow: hidden;
 }
 
-/* Bredden börjar på 0 och sätts sedan av JavaScript */
-.stapel {
-  background-color: var(--lav);
+#bar {
+  background: var(--yellow);
   height: 100%;
-  width: 0;
-  transition: width 0.3s;
+  width: 0; /* JavaScript makes this wider */
 }
 
-.raknare {
-  font-weight: 700;
-}
-
-.packlista {
+.checklist {
   list-style: none;
   padding: 0;
 }
 
-.packlista li {
-  border-bottom: 1px solid #c9d6d6;
-}
-
-.packlista label {
+.checklist label {
   display: block;
-  padding: 0.6rem 0;
-  cursor: pointer;
+  padding: 0.5rem 0;
 }
 
-.packlista input {
-  width: 1.2rem;
-  height: 1.2rem;
-  margin-right: 0.6rem;
-  accent-color: var(--hav);
-}
-
-/* Det man har bockat i blir genomstruket */
-.packlista label:has(input:checked) {
-  text-decoration: line-through;
-  color: var(--text-ljus);
-}
-
-
-/* ---------- Sidfot ---------- */
-
-.sidfot {
-  background-color: var(--hav);
-  color: #dbe6e6;
-  padding: 2rem 1.5rem;
-  font-size: 0.95rem;
-}
-
-.sidfot p {
-  max-width: var(--max-bredd);
-  margin: 0.3rem auto;
-}
-
-
-/* ---------- Kvällsläge ----------
-   JavaScript lägger till klassen "kvall" på <body>.
-   Då byts färgvariablerna ut och hela sidan blir mörk. */
-body.kvall {
-  --bakgrund: #16232c;
-  --yta: #1f3240;
-  --text: #ece4d4;
-  --text-ljus: #b3c0c4;
-  --lank: #f2c94c;
-  --hav: #0c1a22;
-}
-
-body.kvall .packlista li {
-  border-color: #34495a;
-}
-
-body.kvall .packlista input {
-  accent-color: var(--lav);
-}
-
-/* Den mörka knapplänken behöver en ljus kant i kvällsläget */
-body.kvall .knapp-lank {
-  border: 2px solid var(--lav);
-}
-
-body.kvall .knapp-lank:hover {
-  background-color: var(--yta);
-  color: #fff;
-}
-
-
-/* ---------- Mobil ---------- */
-
-/* Inga animationer för den som har valt bort det i sin dator */
-@media (prefers-reduced-motion: reduce) {
-  .stapel {
-    transition: none;
-  }
-}
-
-@media (max-width: 760px) {
-  body {
-    font-size: 1.05rem;
-  }
-
-  .sidhuvud {
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-  }
-
-  .logga {
-    font-size: 1rem;
-  }
-
-  .logga img {
-    width: 30px;
-    height: 30px;
-  }
-
-  .meny-knapp {
-    display: block;
-  }
-
-  /* Lite mindre knappar så att allt får plats på en rad */
-  .meny-knapp,
-  .kvall-knapp {
-    font-size: 0.9rem;
-    padding: 0.3rem 0.7rem;
-  }
-
-  .sidhuvud {
-    gap: 0.5rem;
-  }
-
-  /* Menyn är dold tills man trycker på knappen */
-  .meny {
-    display: none;
-    width: 100%;
-    order: 3; /* hamnar under logga och knappar */
-  }
-
-  .meny.oppen {
-    display: block;
-  }
-
-  .meny ul {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  /* Öarna: en kolumn, bilden alltid först */
-  .o-sektion {
-    grid-template-columns: 1fr;
-  }
-
-  .o-sektion:nth-of-type(even) figure {
-    order: 0;
-  }
-
-  .hero img {
-    height: 60vh;
-  }
+footer {
+  background: var(--sea);
+  color: white;
+  text-align: center;
+  padding: 1rem;
 }
