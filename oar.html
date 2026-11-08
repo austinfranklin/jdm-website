@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Grinda, Utö och Sandhamn: vad du kan göra och hur du tar dig dit.">
+  <title>Öarna – Skärgårdsguiden</title>
+
+  <!-- Favicon: .ico för äldre webbläsare, .png för nyare och för mobilens hemskärm -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="img/favicon.png">
+
+  <!-- Typsnitt från Google Fonts. Zilla Slab till rubriker, Atkinson Hyperlegible till brödtext
+       (Atkinson är gjort för att vara lättläst, därför valde jag det) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Zilla+Slab:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- All formatering ligger i en och samma CSS-fil -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- defer = scriptet körs först när hela sidan har laddats -->
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <!-- Länk för den som navigerar med tangentbord, syns bara när den får fokus -->
+  <a class="hoppa" href="#innehall">Hoppa till innehållet</a>
+
+  <header class="sidhuvud">
+    <a class="logga" href="index.html">
+      <img src="img/favicon.png" alt="" width="40" height="40">
+      Skärgårdsguiden
+    </a>
+
+    <!-- Menyknappen visas bara på smala skärmar (se CSS) -->
+    <button id="meny-knapp" class="meny-knapp" aria-expanded="false" aria-controls="meny">Meny</button>
+
+    <nav id="meny" class="meny" aria-label="Huvudmeny">
+      <ul>
+        <li><a href="index.html">Start</a></li>
+        <li><a href="oar.html" aria-current="page">Öarna</a></li>
+        <li><a href="packlista.html">Packlista</a></li>
+        <li><a href="om.html">Om sidan</a></li>
+      </ul>
+    </nav>
+
+    <button id="kvall-knapp" class="kvall-knapp" aria-pressed="false">Kvällsläge</button>
+  </header>
+
+  <main id="innehall">
+    <div class="sektion smal">
+      <h1>Tre öar, tre olika dagar</h1>
+      <p>Här är lite mer om varje ö. Hoppa direkt till den du är nyfiken på:</p>
+      <!-- Länkar till id:n längre ner på samma sida -->
+      <ul class="snabblankar">
+        <li><a href="#grinda">Grinda</a></li>
+        <li><a href="#uto">Utö</a></li>
+        <li><a href="#sandhamn">Sandhamn</a></li>
+      </ul>
+    </div>
+
+    <section class="o-sektion" id="grinda">
+      <h2>Grinda</h2>
+      <figure>
+        <img src="img/grinda.jpg" alt="Illustration av en skogsklädd ö med en träbrygga och en röd stuga vid vattnet." width="1200" height="800" loading="lazy">
+        <figcaption>Grinda, illustration.</figcaption>
+      </figure>
+      <div class="o-text">
+        <p>Grinda ligger i mellanskärgården och båten tar ungefär en och en halv timme från stan. Ön är liten nog att gå runt på en dag men stor nog att hitta en egen klippa.</p>
+        <h3>Gör det här</h3>
+        <ul>
+          <li>Gå stigen runt ön och stanna där det ser fint ut.</li>
+          <li>Bada från klipporna på norra sidan.</li>
+          <li>Ät lunch på värdshuset eller ta med egen mat till en rastplats.</li>
+        </ul>
+        <h3>Bra att veta</h3>
+        <p>Det finns ingen biltrafik på ön. Ta med bra skor, stigarna är steniga på sina ställen.</p>
+      </div>
+    </section>
+    <section class="o-sektion" id="uto">
+      <h2>Utö</h2>
+      <figure>
+        <img src="img/uto.jpg" alt="Illustration av en väderkvarn på en bergig ö i solnedgång." width="1200" height="800" loading="lazy">
+        <figcaption>Utö, illustration.</figcaption>
+      </figure>
+      <div class="o-text">
+        <p>Utö ligger längre söderut. Här bröt man järnmalm i flera hundra år och de gamla gruvhålen finns kvar, fyllda med vatten.</p>
+        <h3>Gör det här</h3>
+        <ul>
+          <li>Hyr en cykel vid hamnen och cykla söderut.</li>
+          <li>Titta ner i gruvhålen (bakom staketet!).</li>
+          <li>Gå upp till väderkvarnen och titta ut över havet.</li>
+        </ul>
+        <h3>Bra att veta</h3>
+        <p>Utö är stor. Vill du se mycket på en dag är cykel nästan ett måste.</p>
+      </div>
+    </section>
+    <section class="o-sektion" id="sandhamn">
+      <h2>Sandhamn</h2>
+      <figure>
+        <img src="img/sandhamn.jpg" alt="Illustration av segelbåtar framför en rad små trähus." width="1200" height="800" loading="lazy">
+        <figcaption>Sandhamn, illustration.</figcaption>
+      </figure>
+      <div class="o-text">
+        <p>Sandhamn är seglarnas ö. På sommaren ligger båtarna tätt i hamnen och det är mycket folk, särskilt runt de stora seglingstävlingarna.</p>
+        <h3>Gör det här</h3>
+        <ul>
+          <li>Promenera genom byn med sina smala gränder.</li>
+          <li>Gå till sandstranden på öns södra sida.</li>
+          <li>Sitt i hamnen och titta på båtarna.</li>
+        </ul>
+        <h3>Bra att veta</h3>
+        <p>Vill du ha lugn och ro, åk en vardag eller utanför högsäsong.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sidfot">
+    <p>Skärgårdsguiden är ett skolprojekt i kursen Webbdesign på Södertörns högskola, 2026.</p>
+    <p>Kolla alltid tidtabellen hos rederiet innan du åker. Turerna ändras mellan säsongerna.</p>
+  </footer>
+</body>
+</html>
